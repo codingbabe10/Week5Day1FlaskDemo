@@ -4,6 +4,7 @@ from app import app
 from db import users
 from flask import request
 from uuid import uuid4
+from flask.views import MethodView
 
 
 from . import bp
@@ -12,10 +13,18 @@ from db import posts, users
 from schemas import UserSchema
 
 @bp.route('/user/<user_id>')
-class User (methodView):
+class User (MethodView):
    
-   @bp response(200,Userschema)
+   @bp.response(200,UserSchema)
    def get(self, user_id):
+      user = UserModel.query.get(user_id)
+      if user:
+         return user
+      
+      else:
+         abort()
+
+
       try:
          print (users:, users[user_id])
       try:
@@ -46,6 +55,12 @@ class UserList(MethodView)
 @bp.route('/user', methods=['GET'])
 def user():
     return {'users' : list(users.values())}
+
+
+
+
+
+
 
 # @app.post('/user', methods=["GET", "POST"])
 # def user2():
@@ -99,3 +114,6 @@ def delete_user (user_id):
        return {'message': f'user deleted'}, 202
     except:
        return{'message': "Invalid username"}, 400
+    
+    @bp.route('/')
+    class postlist(MethodView)

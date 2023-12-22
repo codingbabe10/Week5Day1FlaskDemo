@@ -1,5 +1,6 @@
 from flask import request
 from uuid import uuid4 
+from flask.views import MehodView 
 
 from db import posts, users
 from db import posts, users
